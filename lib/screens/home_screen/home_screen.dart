@@ -43,7 +43,6 @@ class HomeScreen extends StatelessWidget {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             decoration: BoxDecoration(
-                                color: Colors.red,
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: AssetImage(
@@ -81,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: Colors.transparent,
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: AssetImage(
@@ -111,14 +110,14 @@ class HomeScreen extends StatelessWidget {
                             width: MediaQuery.of(context).size.width / 3.5),
                       ],
                     ),
-                    10.heightBox,
+                    20.heightBox,
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Featured Categories',
                         style: TextStyle(fontSize: 20, fontFamily: semibold),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

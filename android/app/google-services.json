@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "143835071470",
+    "project_id": "kit-kart",
+    "storage_bucket": "kit-kart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143835071470:android:2a0552a05a0ea1be2b04ff",
+        "android_client_info": {
+          "package_name": "com.example.kit_kart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143835071470-37gb9gk97p1sfr10njvlg810frnh9kob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRKg4uS1rRNXX0zzPBLv7Fsra_d2dW8wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143835071470-37gb9gk97p1sfr10njvlg810frnh9kob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

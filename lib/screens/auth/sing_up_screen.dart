@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:kit_kart/consts/consts.dart';
+import 'package:kit_kart/controller/authController.dart';
 import 'package:kit_kart/screens/auth/login_screen.dart';
+import 'package:kit_kart/screens/home.dart';
 
 import '../../widgets_common/button_custom.dart';
 import '../../widgets_common/custom_text_field.dart';
@@ -18,6 +22,11 @@ class SingUpScreen extends StatefulWidget {
 
 class _SingUpScreenState extends State<SingUpScreen> {
   bool? isCheck = false;
+  var controller = Get.put(AuthController());
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController reTypePasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,19 +99,23 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         children: [
                           10.heightBox,
                           CustomTextField(
+                              controller: nameController,
                               label: const Text(namelabel),
                               preIcon: const Icon(Icons.person)),
                           20.heightBox,
                           CustomTextField(
+                              controller: emailController,
                               label: const Text(emaillabel),
                               preIcon: const Icon(Icons.email)),
                           20.heightBox,
                           CustomTextField(
+                              controller: passwordController,
                               label: const Text(passwordlabel),
                               preIcon: const Icon(Icons.lock)),
                           20.heightBox,
                           CustomTextField(
-                              label: const Text(passwordlabel),
+                              controller: reTypePasswordController,
+                              label: const Text(retypepasswordlabel),
                               preIcon: const Icon(Icons.lock)),
                           10.heightBox,
                           Row(
@@ -149,7 +162,25 @@ class _SingUpScreenState extends State<SingUpScreen> {
                               title: singUp,
                               fontsize: 20.0,
                               textcolor: whiteColor,
-                              onPressed: () {}),
+                              onPressed: () async {
+                                try {
+                                  await controller
+                                      .signUpFunction(
+                                          email: emailController.text,
+                                          password: passwordController.text)
+                                      .then((value) {
+                                    return controller.storeUserData(
+                                        name: nameController.text,
+                                        email: emailController.text,
+                                        password: passwordController.text);
+                                  }).then((value) {
+                                    Get.offAll(Home());
+                                  });
+                                } catch (e) {
+                                  auth.signOut();
+                                  print(e);
+                                }
+                              }),
                           5.heightBox,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

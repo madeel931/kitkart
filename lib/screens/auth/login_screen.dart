@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:kit_kart/consts/consts.dart';
+import 'package:kit_kart/controller/authController.dart';
 import 'package:kit_kart/screens/auth/sing_up_screen.dart';
 import 'package:kit_kart/screens/home.dart';
 
@@ -17,6 +18,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var controller = Get.put(AuthController());
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,16 +93,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           10.heightBox,
                           CustomTextField(
+                              controller: emailController,
                               label: const Text(emaillabel),
                               preIcon: const Icon(Icons.email)),
                           20.heightBox,
                           CustomTextField(
+                              controller: passwordController,
                               label: const Text(passwordlabel),
                               preIcon: const Icon(Icons.lock)),
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await controller
+                                      .loginFunction(
+                                          email: emailController,
+                                          password: passwordController)
+                                      .then((value) {
+                                    if (value != null) {
+                                      Get.offAll(() => const Home());
+                                    }
+                                  });
+                                },
                                 child: const Text(
                                   forgotpassword,
                                   style: TextStyle(color: primaryColor),
