@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kit_kart/consts/colors.dart';
+import 'package:kit_kart/screens/cart_screen/cart_screen.dart';
 
 import 'package:kit_kart/screens/splash_screen.dart';
 

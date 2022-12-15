@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../consts/colors.dart';
 
-Widget CustomTextField({Widget? label, Widget? preIcon, controller}) {
+Widget CustomTextField(
+    {Widget? label, Widget? preIcon, controller, validation}) {
   return TextFormField(
+    autovalidateMode: AutovalidateMode.always,
     autofocus: false,
     controller: controller,
     cursorColor: primaryColor,
@@ -18,5 +20,6 @@ Widget CustomTextField({Widget? label, Widget? preIcon, controller}) {
         fillColor: lightGrey,
         focusColor: primaryColor,
         filled: true),
+    validator: validation,
   );
 }

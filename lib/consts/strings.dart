@@ -18,4 +18,24 @@ const searchAnything = 'Search Anything...',
     flashsales = 'Flash Sales',
     topCategory = 'Top Categories',
     topbrands = 'Brands',
-    topSaller = 'Top Sallers';
+    topSaller = 'Top Sallers',
+    womenDress = 'Women Dress',
+    girlsWatches = 'Girls Watches',
+    mobilePhone = 'Mobile Phones',
+    boysGlasses = 'Boys Glasses',
+    tShirts = 'TShirts',
+    girlsDresses = 'Girls Dresses',
+    featuredProduct = 'Featured Product';
+
+// categories string
+
+const womenClothing = 'Women Clothing',
+    menClothingFashion = 'Men Clothing Fashion',
+    computerAccesories = 'Computer & Accessories',
+    autoMobile='Auto Mobile',
+    kidsToys='Kids Toys',
+    sports='Sports',
+    jewelery='Jewelery',
+    cellPhone='Mobiles & Tabs',
+    furniture='Furniture'
+    ;

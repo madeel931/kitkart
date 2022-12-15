@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kit_kart/consts/consts.dart';
 import 'package:kit_kart/controller/authController.dart';
 import 'package:kit_kart/screens/auth/sing_up_screen.dart';
+
 import 'package:kit_kart/screens/home.dart';
 
 import 'package:kit_kart/widgets_common/button_custom.dart';
@@ -93,27 +94,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           10.heightBox,
                           CustomTextField(
-                              controller: emailController,
-                              label: const Text(emaillabel),
-                              preIcon: const Icon(Icons.email)),
+                            validation: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'empty email';
+                              }
+                            },
+                            controller: emailController,
+                            label: const Text(emaillabel),
+                            preIcon: const Icon(Icons.email),
+                          ),
                           20.heightBox,
                           CustomTextField(
-                              controller: passwordController,
-                              label: const Text(passwordlabel),
-                              preIcon: const Icon(Icons.lock)),
+                            controller: passwordController,
+                            label: const Text(passwordlabel),
+                            preIcon: const Icon(Icons.lock),
+                          ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                                onPressed: () async {
-                                  await controller
-                                      .loginFunction(
-                                          email: emailController,
-                                          password: passwordController)
-                                      .then((value) {
-                                    if (value != null) {
-                                      Get.offAll(() => const Home());
-                                    }
-                                  });
+                                onPressed: () {
+                                  Get.offAll(() => const Home(),
+                                      transition: Transition.leftToRight);
                                 },
                                 child: const Text(
                                   forgotpassword,
@@ -128,12 +129,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               title: login,
                               fontsize: 20.0,
                               textcolor: whiteColor,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Home()),
-                                );
+                              onPressed: () async {
+                                await controller
+                                    .loginFunction(
+                                        email: emailController,
+                                        password: passwordController)
+                                    .then((value) {
+                                  Get.offAll(() => const Home());
+                                });
                               }),
                           5.heightBox,
                           Row(

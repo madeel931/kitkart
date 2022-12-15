@@ -3,15 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:kit_kart/consts/consts.dart';
 import 'package:kit_kart/controller/authController.dart';
-import 'package:kit_kart/screens/auth/login_screen.dart';
 import 'package:kit_kart/screens/home.dart';
 
 import '../../widgets_common/button_custom.dart';
 import '../../widgets_common/custom_text_field.dart';
-import '../../widgets_common/icon_login_custom.dart';
 
 class SingUpScreen extends StatefulWidget {
   const SingUpScreen({super.key});
@@ -174,7 +171,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                         email: emailController.text,
                                         password: passwordController.text);
                                   }).then((value) {
-                                    Get.offAll(Home());
+                                    Get.offAll(() => const Home());
                                   });
                                 } catch (e) {
                                   auth.signOut();
