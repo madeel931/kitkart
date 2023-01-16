@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:kit_kart/consts/consts.dart';
 import 'package:kit_kart/controller/authController.dart';
 import 'package:kit_kart/screens/home.dart';
 
+import '../../controller/validator.dart';
 import '../../widgets_common/button_custom.dart';
 import '../../widgets_common/custom_text_field.dart';
 
@@ -18,6 +20,7 @@ class SingUpScreen extends StatefulWidget {
 }
 
 class _SingUpScreenState extends State<SingUpScreen> {
+  final _formKey = GlobalKey<FormState>();
   bool? isCheck = false;
   var controller = Get.put(AuthController());
   TextEditingController nameController = TextEditingController();
@@ -92,114 +95,122 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         color: Colors.white),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          10.heightBox,
-                          CustomTextField(
-                              controller: nameController,
-                              label: const Text(namelabel),
-                              preIcon: const Icon(Icons.person)),
-                          20.heightBox,
-                          CustomTextField(
-                              controller: emailController,
-                              label: const Text(emaillabel),
-                              preIcon: const Icon(Icons.email)),
-                          20.heightBox,
-                          CustomTextField(
-                              controller: passwordController,
-                              label: const Text(passwordlabel),
-                              preIcon: const Icon(Icons.lock)),
-                          20.heightBox,
-                          CustomTextField(
-                              controller: reTypePasswordController,
-                              label: const Text(retypepasswordlabel),
-                              preIcon: const Icon(Icons.lock)),
-                          10.heightBox,
-                          Row(
-                            children: [
-                              Checkbox(
-                                  activeColor: primaryColor,
-                                  checkColor: whiteColor,
-                                  value: isCheck,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      isCheck = newValue;
-                                    });
-                                  }),
-                              Expanded(
-                                child: RichText(
-                                    text: const TextSpan(children: [
-                                  TextSpan(
-                                      text: 'I agree to the ',
-                                      style: TextStyle(
-                                          fontSize: 16, color: fontGrey)),
-                                  TextSpan(
-                                      text: termsCond,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            10.heightBox,
+                            CustomTextField(
+                                controller: nameController,
+                                label: const Text(namelabel),
+                                preIcon: const Icon(Icons.person),
+                                validation: (value) =>
+                                    Validator.validateName(name: value)),
+                            20.heightBox,
+                            CustomTextField(
+                                controller: emailController,
+                                label: const Text(emaillabel),
+                                preIcon: const Icon(Icons.email),
+                                validation: (value) =>
+                                    Validator.validateEmail(email: value)),
+                            20.heightBox,
+                            CustomTextField(
+                                controller: passwordController,
+                                label: const Text(passwordlabel),
+                                preIcon: const Icon(Icons.lock),
+                                validation: (value) =>
+                                    Validator.validatePassword(
+                                        password: value)),
+                            20.heightBox,
+
+                            10.heightBox,
+                            Row(
+                              children: [
+                                Checkbox(
+                                    activeColor: primaryColor,
+                                    checkColor: whiteColor,
+                                    value: isCheck,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        isCheck = newValue;
+                                      });
+                                    }),
+                                Expanded(
+                                  child: RichText(
+                                      text: const TextSpan(children: [
+                                    TextSpan(
+                                        text: 'I agree to the ',
+                                        style: TextStyle(
+                                            fontSize: 16, color: fontGrey)),
+                                    TextSpan(
+                                        text: termsCond,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: primaryColor)),
+                                    TextSpan(
+                                        text: ' & ',
+                                        style: TextStyle(
+                                            fontSize: 16, color: fontGrey)),
+                                    TextSpan(
+                                        text: privacypolicy,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: primaryColor)),
+                                  ])),
+                                )
+                              ],
+                            ),
+                            10.heightBox,
+
+                            //singup Button
+
+                            CustomButton(
+                                width: MediaQuery.of(context).size.width,
+                                hight: 50.0,
+                                color: primaryColor,
+                                title: singUp,
+                                fontsize: 20.0,
+                                textcolor: whiteColor,
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    User? user = await AuthController
+                                        .registerUsingEmailPassword(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                    if (user != null) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Home(user: user)),
+                                      );
+                                    }
+                                  }
+                                }),
+                            5.heightBox,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Already have an acount",
+                                  style: TextStyle(color: fontGrey),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text(
+                                      login,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: primaryColor)),
-                                  TextSpan(
-                                      text: ' & ',
-                                      style: TextStyle(
-                                          fontSize: 16, color: fontGrey)),
-                                  TextSpan(
-                                      text: privacypolicy,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: primaryColor)),
-                                ])),
-                              )
-                            ],
-                          ),
-                          10.heightBox,
-                          CustomButton(
-                              width: MediaQuery.of(context).size.width,
-                              hight: 50.0,
-                              color: primaryColor,
-                              title: singUp,
-                              fontsize: 20.0,
-                              textcolor: whiteColor,
-                              onPressed: () async {
-                                try {
-                                  await controller
-                                      .signUpFunction(
-                                          email: emailController.text,
-                                          password: passwordController.text)
-                                      .then((value) {
-                                    return controller.storeUserData(
-                                        name: nameController.text,
-                                        email: emailController.text,
-                                        password: passwordController.text);
-                                  }).then((value) {
-                                    Get.offAll(() => const Home());
-                                  });
-                                } catch (e) {
-                                  auth.signOut();
-                                  print(e);
-                                }
-                              }),
-                          5.heightBox,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Already have an acount",
-                                style: TextStyle(color: fontGrey),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    login,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: fontGrey),
-                                  )),
-                            ],
-                          ),
-                        ],
+                                          fontSize: 16,
+                                          color: fontGrey),
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

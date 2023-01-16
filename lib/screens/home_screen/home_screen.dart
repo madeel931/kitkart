@@ -1,25 +1,61 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kit_kart/consts/consts.dart';
 import 'package:kit_kart/consts/list.dart';
+import 'package:kit_kart/controller/authController.dart';
 import 'package:kit_kart/screens/home_screen/search_page.dart';
+import 'package:kit_kart/screens/profile_screen/profile_screen.dart';
 import 'package:kit_kart/widgets_common/featured_card.dart';
 import 'package:kit_kart/widgets_common/home_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var controller = AuthController();
+  var userNAme = AuthController.userName;
+  var userUrl = AuthController.userUrl;
+
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text('Welcome Muhammad!'),
+        title: Row(
+          children: [
+            GestureDetector(
+                onTap: (() {
+                  Get.to(() => const ProfileScreen());
+                }),
+                child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: userUrl == null
+                        ? Container(
+                            width: 40,
+                            height: 40,
+                            color: Colors.red,
+                          )
+                        : Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                image: DecorationImage(
+                                    image: NetworkImage(userUrl.toString()))),
+                          ))),
+            20.widthBox,
+            Text(userNAme ?? 'Name'),
+          ],
+        ),
         actions: [
           // Navigate to the Search Screen
           IconButton(
@@ -224,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      // third swpier
+                      // third swipier
                       20.heightBox,
                       VxSwiper.builder(
                           aspectRatio: 16 / 9,
@@ -247,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // all products
                       20.heightBox,
                       GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: 6,
                         gridDelegate:
@@ -282,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 200,
                                   fit: BoxFit.cover,
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 const Text('Macbook Air (2012) 128/SSD'),
                                 10.heightBox,
                                 const Text(

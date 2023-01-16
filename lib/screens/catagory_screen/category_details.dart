@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kit_kart/consts/colors.dart';
 import 'package:kit_kart/consts/consts.dart';
 import 'package:kit_kart/consts/styles.dart';
+import 'package:kit_kart/screens/catagory_screen/item_details.dart';
 
 class CategoryDetails extends StatelessWidget {
   final String? title;
@@ -61,42 +63,47 @@ class CategoryDetails extends StatelessWidget {
                     crossAxisSpacing: 8,
                     mainAxisExtent: 300),
                 itemBuilder: ((context, index) {
-                  return Container(
-                    width: 150,
-                    padding: const EdgeInsets.all(12),
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 7,
-                          offset:
-                              const Offset(0, 4), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          imgP7,
-                          width: 200,
-                          fit: BoxFit.cover,
-                        ),
-                        const Spacer(),
-                        const Text('Macbook Air (2012) 128/SSD'),
-                        10.heightBox,
-                        const Text(
-                          '\$500',
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontFamily: bold,
-                              fontSize: 16),
-                        )
-                      ],
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(() => ItemDetails(title: 'Macbook Air'));
+                    },
+                    child: Container(
+                      width: 150,
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            imgP7,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          ),
+                          const Spacer(),
+                          const Text('Macbook Air (2012) 128/SSD'),
+                          10.heightBox,
+                          const Text(
+                            '\$500',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontFamily: bold,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 }),

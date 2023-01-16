@@ -28,7 +28,7 @@ Widget IconLogin({logo, width, hight, onPressed}) {
         children: [
           Image(image: AssetImage(logo)),
           const Text(
-            'Login with Google acoount',
+            'Login with Google acount',
             style: TextStyle(fontSize: 18, fontFamily: bold, color: fontGrey),
           )
         ],

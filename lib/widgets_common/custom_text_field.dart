@@ -5,7 +5,6 @@ import '../consts/colors.dart';
 Widget CustomTextField(
     {Widget? label, Widget? preIcon, controller, validation}) {
   return TextFormField(
-    autovalidateMode: AutovalidateMode.always,
     autofocus: false,
     controller: controller,
     cursorColor: primaryColor,

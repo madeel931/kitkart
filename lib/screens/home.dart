@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kit_kart/consts/colors.dart';
@@ -5,11 +6,15 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:kit_kart/controller/home_controller.dart';
 import 'package:kit_kart/screens/cart_screen/cart_screen.dart';
 import 'package:kit_kart/screens/catagory_screen/catagory_screen.dart';
+import 'package:kit_kart/screens/favorite_screen/favorite_screen.dart';
 import 'package:kit_kart/screens/home_screen/home_screen.dart';
 import 'package:kit_kart/screens/profile_screen/profile_screen.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final User user;
+  Home({
+    super.key, required this.user
+  });
 
   @override
   State<Home> createState() => _HomeState();
@@ -18,10 +23,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var controller = Get.put(HomeController());
   var navBody = [
-    const HomeScreen(),
+    HomeScreen(),
     const CatagoryScreen(),
     const CartScreen(),
-    const ProfileScreen()
+    const FavoriteScreen()
   ];
 
   @override
@@ -35,7 +40,7 @@ class _HomeState extends State<Home> {
             Icon(Icons.home, color: whiteColor, size: 30),
             Icon(Icons.category, color: whiteColor, size: 30),
             Icon(Icons.shopping_cart, color: whiteColor, size: 30),
-            Icon(Icons.person, color: whiteColor, size: 30),
+            Icon(Icons.favorite, color: whiteColor, size: 30),
           ],
           color: primaryColor,
           buttonBackgroundColor: primaryColor,
